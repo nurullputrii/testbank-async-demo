@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../api/client.js';
+import { id } from '../i18n/id.js';
 
 export default function TransferForm({ account }) {
   const [amount, setAmount] = useState('');
@@ -17,35 +18,40 @@ export default function TransferForm({ account }) {
 
   return (
     <section>
-      <h2>Hitung Biaya Transfer</h2>
+      <h2>{id.transferHeading}</h2>
 
       <div>
-        <label>Nominal Transfer</label>
+        <label htmlFor="transfer-amount">{id.transferAmountLabel}</label>
         <input
+          id="transfer-amount"
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          placeholder="Masukkan nominal"
+          placeholder={id.transferAmountPlaceholder}
         />
       </div>
 
       <div>
-        <label>Saluran Transaksi</label>
-        <select value={channel} onChange={(e) => setChannel(e.target.value)}>
-          <option value="MOBILE">Mobile Banking</option>
-          <option value="INTERNET">Internet Banking</option>
-          <option value="ATM">ATM</option>
-          <option value="TELLER">Teller Cabang</option>
+        <label htmlFor="transfer-channel">{id.transferChannelLabel}</label>
+        <select
+          id="transfer-channel"
+          value={channel}
+          onChange={(e) => setChannel(e.target.value)}
+        >
+          <option value="MOBILE">{id.transferChannelMobile}</option>
+          <option value="INTERNET">{id.transferChannelInternet}</option>
+          <option value="ATM">{id.transferChannelAtm}</option>
+          <option value="TELLER">{id.transferChannelTeller}</option>
         </select>
       </div>
 
-      <button onClick={handleQuote}>Hitung Biaya</button>
+      <button onClick={handleQuote}>{id.transferQuoteButton}</button>
 
       {quote && (
         <div>
-          <div>Biaya Admin: Rp {quote.fee?.toLocaleString('id-ID')}</div>
-          <div>Total Debet: Rp {quote.total?.toLocaleString('id-ID')}</div>
-          <div>Sisa Kuota Gratis: {quote.quotaRemaining}</div>
+          <div>{id.transferFeeLabel}: Rp {quote.fee?.toLocaleString('id-ID')}</div>
+          <div>{id.transferTotalLabel}: Rp {quote.total?.toLocaleString('id-ID')}</div>
+          <div>{id.transferQuotaRemainingLabel}: {quote.quotaRemaining}</div>
         </div>
       )}
     </section>
