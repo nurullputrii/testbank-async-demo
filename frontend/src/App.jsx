@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { api } from './api/client.js';
+import { id } from './i18n/id.js';
 import AccountCard from './components/AccountCard.jsx';
 import TransferForm from './components/TransferForm.jsx';
 import QuotaBadge from './components/QuotaBadge.jsx';
@@ -16,18 +17,18 @@ export default function App() {
     api
       .listAccounts()
       .then(setAccounts)
-      .catch(() => setError('Gagal memuat data rekening'));
+      .catch(() => setError(id.accountsLoadError));
   }, []);
 
   return (
     <main style={{ fontFamily: 'system-ui, sans-serif', padding: 24, maxWidth: 900, margin: '0 auto' }}>
-      <h1>Test Bank Digital</h1>
-      <p>Pilih rekening untuk melihat kuota transfer dan melakukan pembayaran tagihan.</p>
+      <h1>{id.appTitle}</h1>
+      <p>{id.appIntro}</p>
 
       {error && <p style={{ color: '#b00020' }}>{error}</p>}
 
       <section>
-        <h2>Daftar Rekening</h2>
+        <h2>{id.accountsHeading}</h2>
         {accounts.map((account) => (
           <AccountCard key={account.id} account={account} onSelect={() => setSelected(account)} />
         ))}
@@ -37,7 +38,7 @@ export default function App() {
         <>
           <QuotaBadge accountId={selected.id} />
           <TransferForm account={selected} />
-          <h2>Pembayaran Tagihan</h2>
+          <h2>{id.billsHeading}</h2>
           <ElectricityPaymentForm />
           <WaterPaymentForm />
           <MobileTopupForm />
