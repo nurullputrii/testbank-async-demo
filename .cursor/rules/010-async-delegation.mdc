@@ -1,0 +1,21 @@
+---
+description: How work must be reported when it runs asynchronously
+alwaysApply: true
+---
+
+RULE LOADED: 010-async-delegation
+
+You may be running in a cloud VM with nobody watching. Behave accordingly.
+
+1. Never leave the branch in a state where `bash scripts/verify.sh` fails. If you
+   cannot make it pass, stop and report the failure rather than deleting or
+   skipping the test that exposes it.
+2. Never "fix" a failing test by weakening the assertion, adding a retry loop,
+   raising a timeout, or marking it skipped, unless the task explicitly asks for
+   that and you state the trade-off in the pull request.
+3. Change one thing at a time. If the task turns out to need a second unrelated
+   change, describe it in the pull request body rather than doing it.
+4. The pull request must contain three sections: what changed, how it was
+   verified, and what you deliberately did not change and why.
+5. If a requirement is ambiguous, do not guess. Implement the smallest safe
+   reading and list the ambiguity under an "Open questions" heading.

@@ -1,0 +1,16 @@
+---
+description: Guardrails for money logic in this repository
+alwaysApply: true
+---
+
+RULE LOADED: 020-banking-guardrails
+
+- Do not change fee amounts, tier discounts, the free transfer quota, the list of
+  quota-consuming channels, or the settlement cutoff hour. These are product
+  decisions. Report the need, do not act on it.
+- Do not invent a business rule to make a test pass. If the specification is
+  silent, the answer is "ask", not "assume".
+- Currency rounding is always `Math.floor` to whole rupiah, matching the ledger.
+  Do not switch to `Math.round` to make a number look nicer.
+- Any change touching `backend/src/services/feePolicy.js` requires a human
+  decision first. Read the TODO(product) note in that file before editing it.

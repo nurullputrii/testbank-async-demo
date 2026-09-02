@@ -1,0 +1,14 @@
+{
+  "name": "testbank-async-demo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Test Bank digital banking demo. Training repository for Cursor cloud and background agents.",
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "test": "npm --prefix backend run test",
+    "test:flaky": "npm --prefix backend run test:flaky",
+    "build:web": "npm --prefix frontend run build",
+    "verify": "bash scripts/verify.sh"
+  },
+  "license": "MIT"
+}

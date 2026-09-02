@@ -1,0 +1,22 @@
+---
+description: What this repository is and how it is structured
+alwaysApply: true
+---
+
+RULE LOADED: 000-project-context
+
+Test Bank is a fictional retail digital bank used for Cursor training. Everything
+here is invented. No real customer records, no credentials, no production systems.
+
+Layout:
+- `backend/` Node.js + Express API, ES modules, tested with Vitest and Supertest.
+- `frontend/` React 18 + Vite client. The dev server proxies `/api` to port 3001.
+- `scripts/verify.sh` is the single verification command. Run it before claiming done.
+
+Conventions:
+- ES modules only. Use `import`, never `require`.
+- Money is whole rupiah integers. Never introduce floating point currency.
+- Response shape v2 lives in `backend/src/utils/envelope.js`. The v1 helper
+  `legacyResponse.js` is deprecated and must not be used in new code.
+- Customer-facing strings are Bahasa Indonesia. Code, comments, and commit
+  messages are English.
