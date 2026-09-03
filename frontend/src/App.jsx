@@ -20,6 +20,12 @@ export default function App() {
       .catch(() => setError('Gagal memuat data rekening'));
   }, []);
 
+  useEffect(() => {
+    const id = window.location.hash.replace('#', '');
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [selected]);
+
   return (
     <div className="app">
       <a className="skip-link" href="#rekening">
@@ -81,28 +87,35 @@ export default function App() {
           </div>
         </section>
 
-        {!selected && (
-          <p className="alert alert--info">
-            Pilih rekening untuk melihat kuota transfer dan melakukan pembayaran tagihan.
-          </p>
-        )}
-
-        {selected && (
-          <div className="workspace">
-            <QuotaBadge accountId={selected.id} />
+        <div className="workspace">
+          {selected && <QuotaBadge accountId={selected.id} />}
+          {selected ? (
             <TransferForm account={selected} />
-            <section className="section" id="tagihan">
-              <div className="section__head">
-                <h2>Pembayaran Tagihan</h2>
-              </div>
+          ) : (
+            <section className="card panel" id="transfer">
+              <h2>Hitung Biaya Transfer</h2>
+              <p className="muted">
+                Pilih rekening terlebih dahulu untuk menghitung biaya transfer.
+              </p>
+            </section>
+          )}
+          <section className="section" id="tagihan">
+            <div className="section__head">
+              <h2>Pembayaran Tagihan</h2>
+            </div>
+            {selected ? (
               <div className="bills">
                 <ElectricityPaymentForm />
                 <WaterPaymentForm />
                 <MobileTopupForm />
               </div>
-            </section>
-          </div>
-        )}
+            ) : (
+              <p className="alert alert--info">
+                Pilih rekening untuk melihat kuota transfer dan melakukan pembayaran tagihan.
+              </p>
+            )}
+          </section>
+        </div>
       </main>
 
       <footer className="footer">

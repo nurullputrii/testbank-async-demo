@@ -26,6 +26,7 @@
   --shadow: 0 8px 24px rgba(8, 87, 195, 0.08);
   --radius: 12px;
   --font: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  --header-offset: 5.5rem;
 }
 
 *,
@@ -36,6 +37,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-offset);
+}
+
+#rekening,
+#transfer,
+#tagihan {
+  scroll-margin-top: var(--header-offset);
 }
 
 body {
@@ -517,6 +525,10 @@ select {
 }
 
 @media (max-width: 800px) {
+  :root {
+    --header-offset: 9.25rem;
+  }
+
   .header__inner,
   .topbar__inner {
     flex-direction: column;
