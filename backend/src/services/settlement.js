@@ -2,8 +2,6 @@
  * Interbank settlement helpers.
  *
  * Transfers submitted after the daily cutoff settle on the next working day.
- * The suite in tests/flaky exercises this module and disagrees with itself
- * between runs. Finding every cause is Task 2. There is more than one.
  */
 
 export const CUTOFF_HOUR_LOCAL = 15;
@@ -23,25 +21,35 @@ export function nextSettlementDate(date = new Date()) {
 
 /**
  * Reference number stamped on every settled transfer.
- * The address space here is deliberately small.
+ * Monotonic so two transfers in the same process cannot share an id.
  */
+let nextReferenceSeq = 0;
+
 export function generateReferenceId() {
-  return `REF-${Math.floor(Math.random() * 1000)
-    .toString()
-    .padStart(3, '0')}`;
+  nextReferenceSeq += 1;
+  return `REF-${String(nextReferenceSeq).padStart(12, '0')}`;
 }
 
 /**
  * Simulates handing one transfer to the downstream clearing system.
- * Latency varies the way a real network call does.
+ * Latency still varies, but items that share a sink are handed off in
+ * submission order so concurrent callers cannot race the append.
  */
+const sinkQueues = new WeakMap();
+
 export function settleItem(item, sink) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      sink.push(item.id);
-      resolve(item.id);
-    }, Math.floor(Math.random() * 4));
-  });
+  const previous = sinkQueues.get(sink) ?? Promise.resolve();
+  const next = previous.then(
+    () =>
+      new Promise((resolve) => {
+        setTimeout(() => {
+          sink.push(item.id);
+          resolve(item.id);
+        }, Math.floor(Math.random() * 4));
+      }),
+  );
+  sinkQueues.set(sink, next);
+  return next;
 }
 
 export function buildBatch(size) {

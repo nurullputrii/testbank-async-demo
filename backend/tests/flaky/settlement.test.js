@@ -8,24 +8,20 @@ import {
 } from '../../src/services/settlement.js';
 
 /**
- * This suite passes on some runs and fails on others.
- * Run it several times: npm run test:flaky --prefix backend
- *
- * Task 2 asks a cloud agent to find EVERY cause and propose fixes that keep the
- * tests deterministic without weakening what they verify.
- *
- * There is more than one cause here, and they are not the same kind of problem.
+ * Cutoff helpers accept an explicit clock. Tests pin a local wall time
+ * inside the operating window so they do not depend on when the suite runs.
  */
+const INSIDE_OPERATING_WINDOW = new Date(2026, 8, 3, 10, 0, 0, 0);
 
 describe('settlement cutoff', () => {
   it('settles today when we are still inside the operating window', () => {
-    const today = new Date();
+    const today = new Date(INSIDE_OPERATING_WINDOW);
     today.setHours(0, 0, 0, 0);
-    expect(nextSettlementDate().getTime()).toBe(today.getTime());
+    expect(nextSettlementDate(INSIDE_OPERATING_WINDOW).getTime()).toBe(today.getTime());
   });
 
   it('reports that we are before the cutoff', () => {
-    expect(isAfterCutoff()).toBe(false);
+    expect(isAfterCutoff(INSIDE_OPERATING_WINDOW)).toBe(false);
   });
 });
 
