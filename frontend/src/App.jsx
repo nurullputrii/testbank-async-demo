@@ -24,8 +24,8 @@ export default function App() {
     const target = document.getElementById(id);
     const header = document.querySelector('.header');
     if (!target) return;
-    const headerHeight = header ? header.getBoundingClientRect().height : 0;
-    const top = window.scrollY + target.getBoundingClientRect().top - headerHeight - 12;
+    const offset = header ? header.getBoundingClientRect().bottom : 0;
+    const top = window.scrollY + target.getBoundingClientRect().top - offset - 12;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   }
 
