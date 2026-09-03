@@ -447,6 +447,12 @@ select {
   font-size: 14px;
 }
 
+.message--error {
+  color: var(--danger);
+  font-size: 14px;
+  margin: 12px 0 0;
+}
+
 .status {
   display: inline-flex;
   align-items: center;
@@ -457,15 +463,19 @@ select {
   letter-spacing: 0.04em;
 }
 
-.status--unpaid,
-.status--available {
+.status--unpaid {
+  background: #fff4e5;
+  color: #b54708;
+}
+
+.status--paid {
   background: #e7f6ee;
   color: var(--success);
 }
 
-.status--paid {
-  background: #eef2f6;
-  color: var(--muted);
+.status--available {
+  background: #eef6fd;
+  color: var(--nusantara-deep);
 }
 
 .bills {

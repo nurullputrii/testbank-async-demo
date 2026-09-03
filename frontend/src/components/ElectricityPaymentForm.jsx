@@ -37,7 +37,7 @@ export default function ElectricityPaymentForm() {
         Cek Tagihan
       </button>
 
-      {message && <p className="muted">{message}</p>}
+      {message && <p className="message--error">{message}</p>}
 
       {bill &&
         bill.bills.map((item) => (
