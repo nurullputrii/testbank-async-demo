@@ -20,6 +20,16 @@ export default function App() {
       .catch(() => setError('Gagal memuat data rekening'));
   }, []);
 
+  function scrollToSection(event, id) {
+    event.preventDefault();
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.location.hash !== `#${id}`) {
+      window.history.pushState(null, '', `#${id}`);
+    }
+  }
+
   useEffect(() => {
     const id = window.location.hash.replace('#', '');
     if (!id) return;
@@ -28,7 +38,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <a className="skip-link" href="#rekening">
+      <a className="skip-link" href="#rekening" onClick={(event) => scrollToSection(event, 'rekening')}>
         Lewati ke konten
       </a>
 
@@ -41,7 +51,7 @@ export default function App() {
 
       <header className="header">
         <div className="header__inner">
-          <a className="brand" href="#rekening">
+          <a className="brand" href="#rekening" onClick={(event) => scrollToSection(event, 'rekening')}>
             <BrandMark />
             <span>
               <span className="brand__name">TEST BANK</span>
@@ -49,9 +59,15 @@ export default function App() {
             </span>
           </a>
           <nav className="nav" aria-label="Menu utama">
-            <a href="#rekening">Individu</a>
-            <a href="#transfer">Transfer</a>
-            <a href="#tagihan">Tagihan</a>
+            <a href="#rekening" onClick={(event) => scrollToSection(event, 'rekening')}>
+              Individu
+            </a>
+            <a href="#transfer" onClick={(event) => scrollToSection(event, 'transfer')}>
+              Transfer
+            </a>
+            <a href="#tagihan" onClick={(event) => scrollToSection(event, 'tagihan')}>
+              Tagihan
+            </a>
           </nav>
         </div>
       </header>
@@ -135,11 +151,17 @@ export default function App() {
             <div>
               <h2>Tautan</h2>
               <p>
-                <a href="#rekening">Rekening</a>
+                <a href="#rekening" onClick={(event) => scrollToSection(event, 'rekening')}>
+                  Rekening
+                </a>
                 <br />
-                <a href="#transfer">Transfer</a>
+                <a href="#transfer" onClick={(event) => scrollToSection(event, 'transfer')}>
+                  Transfer
+                </a>
                 <br />
-                <a href="#tagihan">Tagihan</a>
+                <a href="#tagihan" onClick={(event) => scrollToSection(event, 'tagihan')}>
+                  Tagihan
+                </a>
               </p>
             </div>
           </div>
