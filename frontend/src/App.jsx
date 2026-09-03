@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { api } from './api/client.js';
+import BrandMark from './components/BrandMark.jsx';
 import AccountCard from './components/AccountCard.jsx';
 import TransferForm from './components/TransferForm.jsx';
 import QuotaBadge from './components/QuotaBadge.jsx';
@@ -20,29 +21,121 @@ export default function App() {
   }, []);
 
   return (
-    <main style={{ fontFamily: 'system-ui, sans-serif', padding: 24, maxWidth: 900, margin: '0 auto' }}>
-      <h1>Test Bank Digital</h1>
-      <p>Pilih rekening untuk melihat kuota transfer dan melakukan pembayaran tagihan.</p>
+    <div className="app">
+      <a className="skip-link" href="#rekening">
+        Lewati ke konten
+      </a>
 
-      {error && <p style={{ color: '#b00020' }}>{error}</p>}
+      <div className="topbar">
+        <div className="topbar__inner">
+          <span>Hubungi kami 1500017 · Senin–Jumat 08.00–17.00 WIB</span>
+          <span>Bahasa Indonesia</span>
+        </div>
+      </div>
 
-      <section>
-        <h2>Daftar Rekening</h2>
-        {accounts.map((account) => (
-          <AccountCard key={account.id} account={account} onSelect={() => setSelected(account)} />
-        ))}
+      <header className="header">
+        <div className="header__inner">
+          <a className="brand" href="#rekening">
+            <BrandMark />
+            <span>
+              <span className="brand__name">TEST BANK</span>
+              <span className="brand__legal">Melayani Dengan Setulus Hati</span>
+            </span>
+          </a>
+          <nav className="nav" aria-label="Menu utama">
+            <a href="#rekening">Individu</a>
+            <a href="#transfer">Transfer</a>
+            <a href="#tagihan">Tagihan</a>
+          </nav>
+        </div>
+      </header>
+
+      <section className="hero">
+        <div className="hero__inner">
+          <p className="hero__kicker">Satu Bank Untuk Semua</p>
+          <h1>Melayani Dengan Setulus Hati</h1>
+          <p>
+            Pilih rekening untuk melihat kuota transfer dan melakukan pembayaran
+            tagihan dengan layanan yang tenang, modern, dan mudah dikenali.
+          </p>
+        </div>
       </section>
 
-      {selected && (
-        <>
-          <QuotaBadge accountId={selected.id} />
-          <TransferForm account={selected} />
-          <h2>Pembayaran Tagihan</h2>
-          <ElectricityPaymentForm />
-          <WaterPaymentForm />
-          <MobileTopupForm />
-        </>
-      )}
-    </main>
+      <main className="page">
+        {error && <p className="alert">{error}</p>}
+
+        <section className="section" id="rekening">
+          <div className="section__head">
+            <h2>Daftar Rekening</h2>
+            <span className="section__hint">Pilih rekening aktif Anda</span>
+          </div>
+          <div className="grid">
+            {accounts.map((account) => (
+              <AccountCard
+                key={account.id}
+                account={account}
+                selected={selected?.id === account.id}
+                onSelect={() => setSelected(account)}
+              />
+            ))}
+          </div>
+        </section>
+
+        {!selected && (
+          <p className="alert alert--info">
+            Pilih rekening untuk melihat kuota transfer dan melakukan pembayaran tagihan.
+          </p>
+        )}
+
+        {selected && (
+          <div className="workspace">
+            <QuotaBadge accountId={selected.id} />
+            <TransferForm account={selected} />
+            <section className="section" id="tagihan">
+              <div className="section__head">
+                <h2>Pembayaran Tagihan</h2>
+              </div>
+              <div className="bills">
+                <ElectricityPaymentForm />
+                <WaterPaymentForm />
+                <MobileTopupForm />
+              </div>
+            </section>
+          </div>
+        )}
+      </main>
+
+      <footer className="footer">
+        <div className="footer__inner">
+          <div className="footer__grid">
+            <div>
+              <h2>Test Bank Kantor Pusat</h2>
+              <p>
+                Test Bank Digital adalah bank ritel fiktif untuk keperluan pelatihan.
+                Tidak ada data nasabah sungguhan, kredensial, atau sistem produksi.
+              </p>
+            </div>
+            <div>
+              <h2>Hubungi Kami</h2>
+              <p>1500017</p>
+            </div>
+            <div>
+              <h2>Tautan</h2>
+              <p>
+                <a href="#rekening">Rekening</a>
+                <br />
+                <a href="#transfer">Transfer</a>
+                <br />
+                <a href="#tagihan">Tagihan</a>
+              </p>
+            </div>
+          </div>
+          <p className="footer__legal">
+            Test Bank berizin dan diawasi dalam lingkungan pelatihan. Simpanan pada
+            aplikasi ini bersifat fiktif dan tidak dijamin lembaga mana pun.
+          </p>
+        </div>
+      </footer>
+    </div>
   );
 }

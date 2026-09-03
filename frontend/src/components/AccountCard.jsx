@@ -1,14 +1,23 @@
 import React from 'react';
 
-export default function AccountCard({ account, onSelect }) {
+export default function AccountCard({ account, onSelect, selected }) {
   return (
-    <div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 12, marginBottom: 8 }}>
-      <strong>{account.name}</strong>
-      <div>Nomor Rekening: {account.id}</div>
-      <div>Tipe Nasabah: {account.tier}</div>
-      <div>Saldo: Rp {account.balance.toLocaleString('id-ID')}</div>
-      <div>Kantor Cabang: {account.branch}</div>
-      <button onClick={onSelect}>Lihat Detail</button>
-    </div>
+    <article className={selected ? 'card card--selected' : 'card'}>
+      <p className="card__eyebrow">{account.tier}</p>
+      <h3 className="card__title">{account.name}</h3>
+      <p className="balance">Rp {account.balance.toLocaleString('id-ID')}</p>
+      <p className="balance__label">Saldo tersedia</p>
+      <div className="meta">
+        <div>
+          Nomor Rekening: <strong>{account.id}</strong>
+        </div>
+        <div>
+          Kantor Cabang: <strong>{account.branch}</strong>
+        </div>
+      </div>
+      <button className="btn btn--block" onClick={onSelect}>
+        {selected ? 'Terpilih' : 'Lihat Detail'}
+      </button>
+    </article>
   );
 }

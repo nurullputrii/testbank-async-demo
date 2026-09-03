@@ -18,12 +18,14 @@ export default function ElectricityPaymentForm() {
   }
 
   return (
-    <section style={{ border: '1px solid #eee', borderRadius: 8, padding: 12, marginBottom: 12 }}>
+    <section className="card panel">
       <h3>Tagihan Listrik</h3>
 
-      <div>
-        <label>Nomor Meter / ID Pelanggan</label>
+      <div className="field">
+        <label htmlFor="electricity-ref">Nomor Meter / ID Pelanggan</label>
         <input
+          id="electricity-ref"
+          className="control"
           type="text"
           value={customerRef}
           onChange={(e) => setCustomerRef(e.target.value)}
@@ -31,19 +33,27 @@ export default function ElectricityPaymentForm() {
         />
       </div>
 
-      <button onClick={handleInquiry}>Cek Tagihan</button>
+      <button className="btn" onClick={handleInquiry}>
+        Cek Tagihan
+      </button>
 
-      {message && <p>{message}</p>}
+      {message && <p className="muted">{message}</p>}
 
-      {bill && bill.bills.map((item) => (
-        <div key={item.period || item.customerRef}>
-          <div>Nama Pelanggan: {item.name}</div>
-          <div>Periode Tagihan: {item.period || 'Tidak ada periode'}</div>
-          <div>Jumlah Tagihan: Rp {item.amount.toLocaleString('id-ID')}</div>
-          <div>Biaya Admin: Rp {bill.adminFee.toLocaleString('id-ID')}</div>
-          <div>Status: {item.status}</div>
-        </div>
-      ))}
+      {bill &&
+        bill.bills.map((item) => (
+          <div className="bill" key={item.period || item.customerRef}>
+            <div>Nama Pelanggan: {item.name}</div>
+            <div>Periode Tagihan: {item.period || 'Tidak ada periode'}</div>
+            <div>Jumlah Tagihan: Rp {item.amount.toLocaleString('id-ID')}</div>
+            <div>Biaya Admin: Rp {bill.adminFee.toLocaleString('id-ID')}</div>
+            <div>
+              Status:{' '}
+              <span className={`status status--${String(item.status).toLowerCase()}`}>
+                {item.status}
+              </span>
+            </div>
+          </div>
+        ))}
     </section>
   );
 }

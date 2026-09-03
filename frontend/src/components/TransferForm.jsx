@@ -16,12 +16,14 @@ export default function TransferForm({ account }) {
   }
 
   return (
-    <section>
+    <section className="card panel" id="transfer">
       <h2>Hitung Biaya Transfer</h2>
 
-      <div>
-        <label>Nominal Transfer</label>
+      <div className="field">
+        <label htmlFor="transfer-amount">Nominal Transfer</label>
         <input
+          id="transfer-amount"
+          className="control"
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
@@ -29,9 +31,14 @@ export default function TransferForm({ account }) {
         />
       </div>
 
-      <div>
-        <label>Saluran Transaksi</label>
-        <select value={channel} onChange={(e) => setChannel(e.target.value)}>
+      <div className="field">
+        <label htmlFor="transfer-channel">Saluran Transaksi</label>
+        <select
+          id="transfer-channel"
+          className="control"
+          value={channel}
+          onChange={(e) => setChannel(e.target.value)}
+        >
           <option value="MOBILE">Mobile Banking</option>
           <option value="INTERNET">Internet Banking</option>
           <option value="ATM">ATM</option>
@@ -39,12 +46,18 @@ export default function TransferForm({ account }) {
         </select>
       </div>
 
-      <button onClick={handleQuote}>Hitung Biaya</button>
+      <button className="btn" onClick={handleQuote}>
+        Hitung Biaya
+      </button>
 
       {quote && (
-        <div>
-          <div>Biaya Admin: Rp {quote.fee?.toLocaleString('id-ID')}</div>
-          <div>Total Debet: Rp {quote.total?.toLocaleString('id-ID')}</div>
+        <div className="quote">
+          <div>
+            Biaya Admin: <strong>Rp {quote.fee?.toLocaleString('id-ID')}</strong>
+          </div>
+          <div>
+            Total Debet: <strong>Rp {quote.total?.toLocaleString('id-ID')}</strong>
+          </div>
           <div>Sisa Kuota Gratis: {quote.quotaRemaining}</div>
         </div>
       )}
