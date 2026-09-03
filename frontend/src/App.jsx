@@ -20,20 +20,25 @@ export default function App() {
       .catch(() => setError('Gagal memuat data rekening'));
   }, []);
 
+  function jumpToId(id) {
+    const target = document.getElementById(id);
+    const header = document.querySelector('.header');
+    if (!target) return;
+    const headerHeight = header ? header.getBoundingClientRect().height : 0;
+    const top = window.scrollY + target.getBoundingClientRect().top - headerHeight - 12;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
   function scrollToSection(event, id) {
     event.preventDefault();
-    const target = document.getElementById(id);
-    if (!target) return;
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (window.location.hash !== `#${id}`) {
-      window.history.pushState(null, '', `#${id}`);
-    }
+    jumpToId(id);
+    window.history.replaceState(null, '', `#${id}`);
   }
 
   useEffect(() => {
     const id = window.location.hash.replace('#', '');
     if (!id) return;
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    jumpToId(id);
   }, [selected]);
 
   return (
