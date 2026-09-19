@@ -24,4 +24,7 @@ export const api = {
   getQuota: (accountId) => get(`/transfers/${accountId}/quota`).then((p) => p.result),
   quoteTransfer: (payload) => post('/transfers/quote', payload).then((p) => p.result),
   inquireBill: (biller, customerRef) => get(`/billers/${biller}/inquiry/${customerRef}`).then((p) => p.result),
+  // TODO(BCAD-101): listRecentTransfers(accountId)
+  // GET /transfers/:accountId/recent is v2 ({ data, meta }). Read `data`.
+  // Do not unwrap `.result` here. Do not change the v1 readers above.
 };

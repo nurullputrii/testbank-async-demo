@@ -3,6 +3,7 @@ import { api } from './api/client.js';
 import AccountCard from './components/AccountCard.jsx';
 import TransferForm from './components/TransferForm.jsx';
 import QuotaBadge from './components/QuotaBadge.jsx';
+import RecentTransfers from './components/RecentTransfers.jsx';
 import ElectricityPaymentForm from './components/ElectricityPaymentForm.jsx';
 import WaterPaymentForm from './components/WaterPaymentForm.jsx';
 import MobileTopupForm from './components/MobileTopupForm.jsx';
@@ -36,6 +37,7 @@ export default function App() {
       {selected && (
         <>
           <QuotaBadge accountId={selected.id} />
+          <RecentTransfers accountId={selected.id} />
           <TransferForm account={selected} />
           <h2>Pembayaran Tagihan</h2>
           <ElectricityPaymentForm />
