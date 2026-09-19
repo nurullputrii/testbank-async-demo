@@ -48,6 +48,31 @@ describe('transfers', () => {
   });
 });
 
+/**
+ * BCAD-101 scaffolding. The handler is v2 on purpose; listRecentTransfers still
+ * returns []. Plan Mode must add newest-first + max-5 assertions — do not assert
+ * an empty list here or the implementing tests will fight the stub.
+ */
+describe('transfers recent (BCAD-101 scaffolding)', () => {
+  it('returns 404 with a v2 error for an unknown account', async () => {
+    const res = await request(app).get('/api/transfers/ACC-0000/recent');
+    expect(res.status).toBe(404);
+    expect(res.body.error.code).toBe('ACCOUNT_NOT_FOUND');
+    expect(res.body.meta.apiVersion).toBe('2');
+    expect(res.body.result).toBeUndefined();
+  });
+
+  it('returns a v2 envelope with an items array', async () => {
+    const res = await request(app).get('/api/transfers/ACC-1001/recent');
+    expect(res.status).toBe(200);
+    expect(res.body.meta.apiVersion).toBe('2');
+    expect(res.body.data.items).toBeInstanceOf(Array);
+    expect(res.body.data.items.length).toBeLessThanOrEqual(5);
+    expect(res.body.result).toBeUndefined();
+    // TODO(BCAD-101): assert newest executedAt first and ACC-1001's four fixture rows
+  });
+});
+
 describe('billers', () => {
   it('finds an unpaid electricity bill', async () => {
     const res = await request(app).get('/api/billers/electricity/inquiry/512300998877');

@@ -43,3 +43,7 @@ export function findBills(billerCode, customerRef) {
 export function transfersFor(accountId) {
   return transferRecords.filter((t) => t.accountId === accountId);
 }
+
+// TODO(BCAD-101): recent mutasi reads this list via services/recentTransfers.js.
+// Do not add records here to "make the demo look busy" — the four ACC-1001 rows
+// are enough. ACC-1003 has none and is the empty-state fixture.

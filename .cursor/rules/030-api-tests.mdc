@@ -1,0 +1,17 @@
+---
+description: New and changed API routes need tests and the v2 envelope
+globs: backend/src/routes/**/*.js,backend/src/utils/**/*.js,backend/tests/**/*.js
+alwaysApply: false
+---
+
+RULE LOADED: 030-api-tests
+
+- Every new or changed route under `backend/src/routes/` needs coverage in
+  `backend/tests/unit/`. Assert status code **and** body shape.
+- **New** endpoints must use `sendEnvelope` / `sendError` from
+  `backend/src/utils/envelope.js` (v2: `{ data, meta }` / `{ error, meta }`).
+  Do not call `legacyResponse` from new code. Do not migrate existing v1
+  routes unless the ticket explicitly says to.
+- Verify with `bash scripts/verify.sh`. Do not skip, retry-loop, or weaken
+  assertions to make the suite green.
+- Money in request and response bodies is whole rupiah integers.

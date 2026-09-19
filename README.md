@@ -35,6 +35,17 @@ One command: backend unit tests plus a frontend production build. If it prints
 The suite in `backend/tests/flaky/` is intentionally unstable and excluded from
 the default run. That instability is the material for Task 2.
 
+## BCA Digital workshop
+
+Presenter runbook for the live Cursor desktop demo (Plan Mode + Cloud Agents):
+
+- [`demo/WORKSHOP.md`](./demo/WORKSHOP.md) — Block #2 minute-by-minute, Block #3 backup script, exact commands
+- [`demo/prompts.md`](./demo/prompts.md) — copy-paste Plan Mode and Cloud Agent prompts
+- [`tickets/BCAD-101-workshop-feature.md`](./tickets/BCAD-101-workshop-feature.md) — unfinished mutasi feature (do not implement before the session)
+
+This repo stays Node + React. There is no second stack. `/multitask` on iOS is
+out of scope here.
+
 ## For the lab
 
 1. Fork this repo into your own GitHub or GitLab account.
@@ -53,6 +64,7 @@ the pull request.
 | `GET /api/accounts` | List customers |
 | `GET /api/transfers/:accountId` | Transfer history |
 | `GET /api/transfers/:accountId/quota` | Free quota snapshot for the current month |
+| `GET /api/transfers/:accountId/recent` | Short mutasi (v2 envelope; **BCAD-101, still stubbed**) |
 | `POST /api/transfers/quote` | Fee quote for a proposed transfer |
 | `GET /api/billers/:biller/inquiry/:customerRef` | Bill lookup |
 | `POST /api/billers/:biller/payment` | Payment quote |
@@ -69,3 +81,5 @@ Billers: `electricity`, `water`, `health-insurance`, `mobile-topup`.
 | `backend/src/services/transferQuota.js` | Zero coverage. Month boundary in UTC+7, scheduled vs executed date, reversals, channel eligibility | Task 3 |
 | `frontend/src/components/*PaymentForm.jsx` | Three near-identical copies, hardcoded strings, no accessible labels | Task 4 |
 | `backend/src/services/feePolicy.js` | An ambiguous customer promise that must NOT be delegated | Debrief |
+| `tickets/BCAD-101-workshop-feature.md` | Unfinished recent-mutasi story + TODOs for Plan Mode | BCA workshop Block #2 |
+| `legacy/` | Synthetic Java `javax.*` resource; not compiled | BCA workshop Block #3 |
