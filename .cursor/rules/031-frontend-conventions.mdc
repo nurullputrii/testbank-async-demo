@@ -1,0 +1,18 @@
+---
+description: Frontend copy, money formatting, and mixed v1/v2 API clients
+globs: frontend/src/**/*.{js,jsx}
+alwaysApply: false
+---
+
+RULE LOADED: 031-frontend-conventions
+
+- Customer-facing strings are Bahasa Indonesia. Code, comments, and commits
+  stay English.
+- Display money with `toLocaleString('id-ID')` on integer rupiah. Do not
+  introduce floating-point currency.
+- `frontend/src/api/client.js` still unwraps v1 `payload.result` for existing
+  calls. That is deliberate. New v2 endpoints expose `payload.data` — add a
+  dedicated reader, do not rewrite the v1 helpers unless the ticket is the
+  API contract migration (`TASKS.md` Task 1).
+- Give interactive controls a visible label. Do not change fee, quota, or
+  settlement behaviour from the client.
